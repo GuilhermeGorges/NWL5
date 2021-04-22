@@ -2,7 +2,7 @@ import { format, parseISO } from 'date-fns';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router' //verifica se esta em carregamento ou não a pagina 
 import { api } from '../../services/api';
 import styles from './episode.module.scss'
 import Image from 'next/image';
@@ -53,12 +53,19 @@ export default function Episode({ episode }: EpisodeProps) {
 }
 
 // este método serve para que páginas estáticas que podem ser dinâmicas possam funcionar corretamente  
+// quando em fallback: 'blocking' as paginas dentro de paths: [] ja são geradas estáticamente enquanto as demais páginas só irão ser geradas quando requisitadas/acessadas pelo client
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [{
+      params: {
+        slug: 'a-importancia-da-contribuicao-em-open-source'
+      }
+    }],
     fallback: 'blocking'
   }
 }
+
+
 
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
