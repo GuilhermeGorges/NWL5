@@ -44,6 +44,7 @@ export async function getServerSideProps() {
 // Torna a página mais ágil. 
 // Só funciona em produção por isso se faz necessário gerar uma build para o projeto, para simular produção.
 // Para isso yarn build 
+import { useContext } from 'react';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';  // componente do next que formata automaticamente a imagem para a page 
 import Link from 'next/link'; // usado para que somente esta parte da página seja carregada enquanto o que não se modifica fica estático tornando a page mais ágil
@@ -52,6 +53,8 @@ import ptBR from 'date-fns/locale/pt-BR';
 
 import { api } from '../services/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
+import { PlayerContext } from '../contexts/PlayerContext';
+
 import styles from './home.module.scss';
 
 type Episode = {
@@ -74,10 +77,13 @@ type HomeProps = {
 // sempre que adicionar uma estrutura de repetição .map no react, precisa se adicionar uma propriedade key no primeiro elemento do return dentro do map com a informação unica que existe em cada episódio (ID) ex:   <li key={episode.id}> 
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  const player = useContext(PlayerContext)
+
+
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
-        <h2>Últimos lançamentos</h2>
+        <h2>Últimos lançamentos {player} </h2>
 
         <ul>
           {latestEpisodes.map(episode => {
