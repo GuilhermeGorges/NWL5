@@ -46,6 +46,7 @@ export async function getServerSideProps() {
 // Para isso yarn build 
 import { GetStaticProps } from 'next';
 import Image from 'next/image';  // componente do next que formata automaticamente a imagem para a page 
+import Head from 'next/head';
 import Link from 'next/link'; // usado para que somente esta parte da página seja carregada enquanto o que não se modifica fica estático tornando a page mais ágil
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -82,6 +83,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
   return (
     <div className={styles.homepage}>
+      <Head>
+        <title>Home | Podcastr</title>
+      </Head>
       <section className={styles.latestEpisodes}>
         <h2>Últimos lançamentos</h2>
 
