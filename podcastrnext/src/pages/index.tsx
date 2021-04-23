@@ -77,7 +77,9 @@ type HomeProps = {
 // sempre que adicionar uma estrutura de repetição .map no react, precisa se adicionar uma propriedade key no primeiro elemento do return dentro do map com a informação unica que existe em cada episódio (ID) ex:   <li key={episode.id}> 
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { play } = useContext(PlayerContext)
+  const { playList } = useContext(PlayerContext)
+
+  const episodeList = [...latestEpisodes, ...allEpisodes];
 
   return (
     <div className={styles.homepage}>
@@ -85,10 +87,16 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         <h2>Últimos lançamentos</h2>
 
         <ul>
-          {latestEpisodes.map(episode => {
+          {latestEpisodes.map((episode, index) => {
             return (
               <li key={episode.id}>
-                <Image width={192} height={192} src={episode.thumbnail} alt={episode.title} objectFit='cover' />
+                <Image
+                  width={192}
+                  height={192}
+                  src={episode.thumbnail}
+                  alt={episode.title}
+                  objectFit='cover'
+                />
 
                 <div className={styles.episodeDetails}>
                   <Link href={`/episodes/${episode.id}`}>
@@ -99,7 +107,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button" onClick={() => play(episode)}>
+                <button type="button" onClick={() => playList(episodeList, index)}>
                   <img src="/play-green.svg" alt="Tocar Episódio" />
                 </button>
               </li>
@@ -121,11 +129,17 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
             </tr>
           </thead>
           <tbody>
-            {allEpisodes.map(episode => {
+            {allEpisodes.map((episode, index) => {
               return (
                 <tr key={episode.id}>
                   <td style={{ width: 72 }}>
-                    <Image width={120} height={120} src={episode.thumbnail} alt={episode.title} objectFit="cover" />
+                    <Image
+                      width={120}
+                      height={120}
+                      src={episode.thumbnail}
+                      alt={episode.title}
+                      objectFit="cover"
+                    />
                   </td>
                   <td>
                     <Link href={`/episodes/${episode.id}`}>
@@ -136,7 +150,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <td style={{ width: 100 }}>{episode.publishedAt}</td>
                   <td>{episode.durationAsString}</td>
                   <td>
-                    <button type="button" onClick={() => play(episode)}>
+                    <button type="button" onClick={() => playList(episodeList, index + latestEpisodes.length)}>
                       <img src="/play-green.svg" alt="Tocar episódio" />
                     </button>
                   </td>
