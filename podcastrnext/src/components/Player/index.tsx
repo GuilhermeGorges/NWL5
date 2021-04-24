@@ -108,8 +108,8 @@ export function Player() {
           <audio
             src={episode.url}
             ref={audioRef}
-            loop={isLooping}
             autoPlay
+            loop={isLooping}
             onEnded={handleSoundEnded}
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)}
