@@ -37,7 +37,6 @@ export async function getServerSideProps() {
     }
   }
 }
-
 */
 // 3 - SSG Static site generation
 // Gera uma versão estática da página, sem precisar fazer uma nova requisição para cada acesso
